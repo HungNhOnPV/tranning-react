@@ -28,11 +28,11 @@ const showPaginate = (products, paginate, setPaginate) => {
   for (let i = 1; i <= count; i++) {
     i === paginate
       ? result.push(
-          <a onClick={() => setPaginate(i)} className="active">
+          <a key={i} onClick={() => setPaginate(i)} className="active">
             {i}
           </a>
         )
-      : result.push(<a onClick={() => setPaginate(i)}>{i}</a>);
+      : result.push(<a key={i} onClick={() => setPaginate(i)}>{i}</a>);
   }
   return result;
 };
@@ -41,33 +41,40 @@ const Carts = (props) => {
   const [products, setProducts] = useState(props.products);
   const [paginate, setPaginate] = useState(1);
   const [select, setSelect] = useState("fea");
+  const [text, setText] = useState(props.text);
+
+    useEffect(() => {
+      setText(props.text);
+    }, [props.text]);
 
   useEffect(() => {
     if (select === "asc") {
       setProducts(() => [...props.products].sort((a, b) => (a.price - b.price)));
-    }
-    if (select === "desc") {
+    } else if (select === "desc") {
       setProducts(() => [...props.products].sort((a, b) => (b.price - a.price)));
-    }
-    if (select === "fea") {
+    } else if (select === "fea") {
       setProducts(props.products);
     }
-  }, [select, props.products]);
+    if (text !== "") {
+      const result = [...products].filter((product) => {
+        return product.name.toLowerCase().indexOf(text.toLowerCase()) !== -1;
+      });
+      setProducts(() => [...result]);
+    }
+  }, [select, text, props.products]);
 
   addCarts(products, paginate);
-
-  const handleSelect = (e) => setSelect(e.target.value);
 
   return (
     <div className="carts">
       <div className="carts__header">
         <p className="count__sort">
-          {JSON.parse(window.localStorage.getItem("carts")).length} results
+          {products.length} results
           found in 3ms
         </p>
         <div className="sort">
           <label for="sort">Sort by</label>
-          <select id="sort" value={select} onChange={handleSelect}>
+          <select id="sort" value={select} onChange={(e) => setSelect(e.target.value)}>
             <option value="fea">Featured</option>
             <option value="asc">Price asc</option>
             <option value="desc">Price desc</option>
@@ -75,7 +82,7 @@ const Carts = (props) => {
         </div>
       </div>
       <div className="carts__main">{showData()}</div>
-      <div class="carts__pagination">
+      <div className="carts__pagination">
         <a
           onClick={
             paginate === 1

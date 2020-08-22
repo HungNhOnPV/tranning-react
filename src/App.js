@@ -6,10 +6,7 @@ import Carts from "./components/Carts";
 
 const App = () => {
   const [products, setProducts] = useState([]);
-  // const [type, setType] = useState([]);
-  // const [typePicked, setTypePicked] = useState("");
-  // const [cartStatus, setCartStatus] = useState(localStorage.length);
-  // const [openCartState, setOpenCartState] = useState(false);
+  const [text, setText] = useState("");
 
   useEffect(() => {
     let xhr = new XMLHttpRequest();
@@ -30,11 +27,15 @@ const App = () => {
     xhr.send();
   }, []);
 
+  const passText = (value) => {
+    setText(value);
+  };
+
   return (
     <div className="App">
-      <Header />
-      <Sidebar />
-      <Carts products={products} />
+      <Header products={products} passText={passText}/>
+      <Sidebar products={products} />
+      <Carts products={products} text={text} />
     </div>
   );
 };

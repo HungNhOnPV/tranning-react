@@ -37,6 +37,7 @@
       margin-bottom: 10px;
       color: $colorBlack;
       text-decoration: none;
+      cursor: pointer;
       span {
         @include customFont(14px, "roboto");
         margin-left: 3px;

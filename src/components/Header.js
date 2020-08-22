@@ -3,6 +3,12 @@ import "../scss/Header.scss";
 import logo from "../images/logo-is.png";
 
 const Header = (props) => {
+  const [text, setText] = useState("");
+
+  const sendText = () => {
+    props.passText(text);
+  };
+
   return (
     <header className="header">
       <a href="index.html" className="logo">
@@ -14,19 +20,16 @@ const Header = (props) => {
           <input
             type="text"
             className="input__search__box"
-            id="q"
-            autoCapitalize="off"
-            autoComplete="off"
-            autoCorrect="off"
             placeholder="Search a product"
-            role="textbox"
-            spellCheck="false"
-            value=""
-            name=""
+            value={text}
+            name={text}
+            onChange={(e) => setText(e.target.value)}
           />
         </div>
-        <span className="btn">
-          <a className="btn__search"><i className="fa fa-search"></i></a>
+        <span className="btn" onClick={sendText()}>
+          <a className="btn__search">
+            <i className="fa fa-search"></i>
+          </a>
         </span>
       </div>
     </header>

@@ -7,6 +7,7 @@
   @include customPosition(fixed, 0, auto, 99, 100%, 50px, true);
   .logo {
     display: flex;
+    text-decoration: none;
     img {
       margin-right: 12px;
       width: 50px;
