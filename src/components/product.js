@@ -11,10 +11,10 @@ const Products = (props) => {
   const showStar = (star) => {
     let result = [];
     for(let i = 1; i <= star; i++) {
-      result.push(<i className="fas fa-star"></i>);
+      result.push(<i key={i} className="fas fa-star"></i>);
     }
     for(let i = star+1; i <= 5; i++) {
-      result.push(<i className="far fa-star"></i>);
+      result.push(<i key={i} className="far fa-star"></i>);
     }
     return result;
   }

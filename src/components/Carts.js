@@ -32,7 +32,11 @@ const showPaginate = (products, paginate, setPaginate) => {
             {i}
           </a>
         )
-      : result.push(<a key={i} onClick={() => setPaginate(i)}>{i}</a>);
+      : result.push(
+          <a key={i} onClick={() => setPaginate(i)}>
+            {i}
+          </a>
+        );
   }
   return result;
 };
@@ -41,40 +45,46 @@ const Carts = (props) => {
   const [products, setProducts] = useState(props.products);
   const [paginate, setPaginate] = useState(1);
   const [select, setSelect] = useState("fea");
-  const [text, setText] = useState(props.text);
-
-    useEffect(() => {
-      setText(props.text);
-    }, [props.text]);
 
   useEffect(() => {
     if (select === "asc") {
-      setProducts(() => [...props.products].sort((a, b) => (a.price - b.price)));
+      setProducts(() => [...props.products].sort((a, b) => a.price - b.price));
     } else if (select === "desc") {
-      setProducts(() => [...props.products].sort((a, b) => (b.price - a.price)));
+      setProducts(() => [...props.products].sort((a, b) => b.price - a.price));
     } else if (select === "fea") {
       setProducts(props.products);
     }
-    if (text !== "") {
-      const result = [...products].filter((product) => {
-        return product.name.toLowerCase().indexOf(text.toLowerCase()) !== -1;
+    if (props.text !== "" || props.star !== 0 || props.type !== "") {
+      const result = [...props.products].filter((product) => {
+        if (props.text !== "") {
+          return (
+            product.name.toLowerCase().indexOf(props.text.toLowerCase()) !== -1
+          );
+        } else if (props.type !== "") {
+          return (
+            product.type.toLowerCase().indexOf(props.type.toLowerCase()) !== -1
+          );
+        } else if (props.star !== 0) {
+          return product.star === props.star;
+        }
       });
       setProducts(() => [...result]);
     }
-  }, [select, text, props.products]);
+  }, [select, props.text, props.type, props.star, props.products]);
 
   addCarts(products, paginate);
 
   return (
     <div className="carts">
       <div className="carts__header">
-        <p className="count__sort">
-          {products.length} results
-          found in 3ms
-        </p>
+        <p className="count__sort">{products.length} results found in 3ms</p>
         <div className="sort">
           <label for="sort">Sort by</label>
-          <select id="sort" value={select} onChange={(e) => setSelect(e.target.value)}>
+          <select
+            id="sort"
+            value={select}
+            onChange={(e) => setSelect(e.target.value)}
+          >
             <option value="fea">Featured</option>
             <option value="asc">Price asc</option>
             <option value="desc">Price desc</option>

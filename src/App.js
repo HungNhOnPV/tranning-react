@@ -7,6 +7,8 @@ import Carts from "./components/Carts";
 const App = () => {
   const [products, setProducts] = useState([]);
   const [text, setText] = useState("");
+  const [type, setType] = useState("");
+  const [star, setStar] = useState(0);
 
   useEffect(() => {
     let xhr = new XMLHttpRequest();
@@ -31,11 +33,19 @@ const App = () => {
     setText(value);
   };
 
+  const passType = (value) => {
+    setType(value);
+  }
+
+  const passStar = (value) => {
+    setStar(value);
+  }
+
   return (
     <div className="App">
       <Header products={products} passText={passText}/>
-      <Sidebar products={products} />
-      <Carts products={products} text={text} />
+      <Sidebar products={products} passType={passType} passStar={passStar} />
+      <Carts products={products} text={text} type={type} star={star} />
     </div>
   );
 };
