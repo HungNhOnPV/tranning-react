@@ -56,14 +56,31 @@ const Carts = (props) => {
     }
     if (props.text !== "" || props.star !== 0 || props.type !== "") {
       const result = [...props.products].filter((product) => {
-        if (props.text !== "") {
+        if (props.type !== "" && props.star !== 0 && props.text !== "") {
           return (
-            product.name.toLowerCase().indexOf(props.text.toLowerCase()) !== -1
+            product.name.toLowerCase().indexOf(props.text.toLowerCase()) !== -1 &&
+            product.type.toLowerCase().indexOf(props.type.toLowerCase()) !== -1 &&
+            product.star === props.star
           );
-        } else if (props.type !== "") {
+        } else if (props.type !== "" && props.star !== 0) {
           return (
+            product.type.toLowerCase().indexOf(props.type.toLowerCase()) !== -1 &&
+            product.star === props.star
+          );
+        } else if (props.text !== "" && props.star !== 0) {
+          return (
+            product.name.toLowerCase().indexOf(props.text.toLowerCase()) !== -1 &&
+            product.star === props.star
+          );
+        } else if (props.text !== "" && props.type !== "") {
+          return (
+            product.name.toLowerCase().indexOf(props.text.toLowerCase()) !== -1 &&
             product.type.toLowerCase().indexOf(props.type.toLowerCase()) !== -1
           );
+        } else if (props.text !== "") {
+          return product.name.toLowerCase().indexOf(props.text.toLowerCase()) !== -1;
+        } else if (props.type !== "") {
+          return product.type.toLowerCase().indexOf(props.type.toLowerCase()) !== -1;
         } else if (props.star !== 0) {
           return product.star === props.star;
         }
