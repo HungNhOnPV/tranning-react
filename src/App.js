@@ -43,8 +43,6 @@ const App = () => {
   }
 
   const passBrand = (value) => {
-    const brand1 = `${brand} ${value}`;
-    console.log(brand1)
     setBrand(value);
   }
 

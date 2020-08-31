@@ -112,12 +112,12 @@ const Sidebar = (props) => {
     return result;
   };
 
-  const showBrand = (brands) => {
+  const showBrand = (brands, value) => {
     let result = [];
     brands.forEach((brand, i) => {
       result.push(
         <label key={i} htmlFor={brand.brand}>
-          <input type="checkbox" id={brand.brand} name="brand" onClick={() => setBrand(brand.brand)}></input>
+          <input type="radio" id={brand.brand} checked={value === brand.brand ? true : false} name="brand" onClick={() => setBrand(brand.brand)}></input>
           &nbsp;{brand.brand}
         </label>
       )
@@ -139,14 +139,15 @@ const Sidebar = (props) => {
   const resetFilter = (value) => {
     setType(value[0]);
     setStar(value[1]);
+    setBrand(value[2]);
   };
 
   return (
     <sidebar className="sidebar">
-      {type === "" && star === 0 ? (
+      {type === "" && star === 0 && brand === "" ? (
         ""
       ) : (
-        <a className="sidebar__clear" onClick={() => resetFilter(["", 0])}>
+        <a className="sidebar__clear" onClick={() => resetFilter(["", 0, ""])}>
           <i className="fa fa-eraser"></i>
           <span>Clear all filters</span>
         </a>
@@ -166,7 +167,7 @@ const Sidebar = (props) => {
           </div>
           <p>Brand</p>
           <div className="brand">
-            {showBrand(brands)}
+            {showBrand(brands, brand)}
             {sendBrand()}
           </div>
         </form>

@@ -54,35 +54,118 @@ const Carts = (props) => {
     } else if (select === "fea") {
       setProducts(props.products);
     }
-    if (props.text !== "" || props.star !== 0 || props.type !== "" || props.brand !== "") {
+    if (
+      props.text !== "" ||
+      props.star !== 0 ||
+      props.type !== "" ||
+      props.brand !== ""
+    ) {
       const result = [...props.products].filter((product) => {
-        if (props.type !== "" && props.star !== 0 && props.text !== "") {
+        if (
+          props.type !== "" &&
+          props.star !== 0 &&
+          props.text !== "" &&
+          props.brand !== ""
+        ) {
           return (
-            product.name.toLowerCase().indexOf(props.text.toLowerCase()) !== -1 &&
-            product.type.toLowerCase().indexOf(props.type.toLowerCase()) !== -1 &&
+            product.brand.toLowerCase().indexOf(props.brand.toLowerCase()) !==
+              -1 &&
+            product.name.toLowerCase().indexOf(props.text.toLowerCase()) !==
+              -1 &&
+            product.type.toLowerCase().indexOf(props.type.toLowerCase()) !==
+              -1 &&
             product.star === props.star
           );
-        } else if (props.type !== "" && props.star !== 0) {
+        } else if (props.type !== "" && props.star !== 0 && props.text !== "") {
           return (
-            product.type.toLowerCase().indexOf(props.type.toLowerCase()) !== -1 &&
+            product.name.toLowerCase().indexOf(props.text.toLowerCase()) !==
+              -1 &&
+            product.type.toLowerCase().indexOf(props.type.toLowerCase()) !==
+              -1 &&
             product.star === props.star
           );
-        } else if (props.text !== "" && props.star !== 0) {
+        } else if (
+          props.type !== "" &&
+          props.star !== 0 &&
+          props.brand !== ""
+        ) {
           return (
-            product.name.toLowerCase().indexOf(props.text.toLowerCase()) !== -1 &&
+            product.brand.toLowerCase().indexOf(props.brand.toLowerCase()) !==
+              -1 &&
+            product.type.toLowerCase().indexOf(props.type.toLowerCase()) !==
+              -1 &&
             product.star === props.star
+          );
+        } else if (
+          props.text !== "" &&
+          props.star !== 0 &&
+          props.brand !== ""
+        ) {
+          return (
+            product.brand.toLowerCase().indexOf(props.brand.toLowerCase()) !==
+              -1 &&
+            product.name.toLowerCase().indexOf(props.text.toLowerCase()) !==
+              -1 &&
+            product.star === props.star
+          );
+        } else if (
+          props.text !== "" &&
+          props.type !== "" &&
+          props.brand !== ""
+        ) {
+          return (
+            product.brand.toLowerCase().indexOf(props.brand.toLowerCase()) !==
+              -1 &&
+            product.name.toLowerCase().indexOf(props.text.toLowerCase()) !==
+              -1 &&
+            product.type.toLowerCase().indexOf(props.type.toLowerCase()) !== -1
+          );
+        } else if (props.brand !== "" && props.star !== 0) {
+          return (
+            product.brand.toLowerCase().indexOf(props.brand.toLowerCase()) !==
+              -1 && product.star === props.star
+          );
+        } else if (props.brand !== "" && props.type !== "") {
+          return (
+            product.brand.toLowerCase().indexOf(props.brand.toLowerCase()) !==
+              -1 &&
+            product.type.toLowerCase().indexOf(props.type.toLowerCase()) !== -1
+          );
+        } else if (props.text !== "" && props.brand !== "") {
+          return (
+            product.name.toLowerCase().indexOf(props.text.toLowerCase()) !==
+              -1 &&
+            product.brand.toLowerCase().indexOf(props.brand.toLowerCase()) !== -1
           );
         } else if (props.text !== "" && props.type !== "") {
           return (
-            product.name.toLowerCase().indexOf(props.text.toLowerCase()) !== -1 &&
+            product.name.toLowerCase().indexOf(props.text.toLowerCase()) !==
+              -1 &&
             product.type.toLowerCase().indexOf(props.type.toLowerCase()) !== -1
           );
         } else if (props.text !== "") {
-          return product.name.toLowerCase().indexOf(props.text.toLowerCase()) !== -1;
+          return (
+            product.name.toLowerCase().indexOf(props.text.toLowerCase()) !== -1
+          );
         } else if (props.type !== "") {
-          return product.type.toLowerCase().indexOf(props.type.toLowerCase()) !== -1;
+          return (
+            product.type.toLowerCase().indexOf(props.type.toLowerCase()) !== -1
+          );
+        } else if (props.type !== "" && props.star !== 0) {
+          return (
+            product.type.toLowerCase().indexOf(props.type.toLowerCase()) !==
+              -1 && product.star === props.star
+          );
+        } else if (props.text !== "" && props.star !== 0) {
+          return (
+            product.name.toLowerCase().indexOf(props.text.toLowerCase()) !==
+              -1 && product.star === props.star
+          );
         } else if (props.brand !== "") {
-          return product.brand.toLowerCase().indexOf(props.brand.toLowerCase()) !== -1;
+          return (
+            product.brand.toLowerCase().indexOf(props.brand.toLowerCase()) !==
+            -1
+          );
         } else if (props.star !== 0) {
           return product.star === props.star;
         }
