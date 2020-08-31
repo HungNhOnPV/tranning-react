@@ -7,6 +7,8 @@ const Sidebar = (props) => {
   const [type, setType] = useState("");
   const [stars, setStars] = useState([]);
   const [star, setStar] = useState(0);
+  const [brands, setBrands] = useState([]);
+  const [brand, setBrand] = useState("");
 
   useEffect(() => {
     setProducts(props.products);
@@ -50,12 +52,35 @@ const Sidebar = (props) => {
     xhr.send();
   }, []);
 
+  useEffect(() => {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://localhost:3000/brands");
+    // request state change event
+    xhr.onreadystatechange = function () {
+      // request completed?
+      if (xhr.readyState !== 4) return;
+      if (xhr.status === 200) {
+        // request successful - show response
+        setBrands(JSON.parse(xhr.responseText));
+      } else {
+        // request error
+        console.log("HTTP error", xhr.status, xhr.statusText);
+      }
+    };
+    // start request
+    xhr.send();
+  }, []);
+
   const sendType = () => {
     props.passType(type);
   };
 
   const sendStar = () => {
     props.passStar(star);
+  };
+
+  const sendBrand = () => {
+    props.passBrand(brand);
   };
 
   const showType = (types) => {
@@ -86,6 +111,19 @@ const Sidebar = (props) => {
     });
     return result;
   };
+
+  const showBrand = (brands) => {
+    let result = [];
+    brands.forEach((brand, i) => {
+      result.push(
+        <label key={i} htmlFor={brand.brand}>
+          <input type="checkbox" id={brand.brand} name="brand" onClick={() => setBrand(brand.brand)}></input>
+          &nbsp;{brand.brand}
+        </label>
+      )
+    });
+    return result;
+  }
 
   const showStar = (star) => {
     let result = [];
@@ -125,6 +163,11 @@ const Sidebar = (props) => {
           <div className="star">
             {showStarRating(stars)}
             {sendStar()}
+          </div>
+          <p>Brand</p>
+          <div className="brand">
+            {showBrand(brands)}
+            {sendBrand()}
           </div>
         </form>
       </div>
